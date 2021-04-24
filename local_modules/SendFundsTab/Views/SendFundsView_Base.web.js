@@ -64,9 +64,7 @@ import monero_requestURI_utils from '../../MoneroUtils/monero_requestURI_utils';
 //
 import Currencies from '../../CcyConversionRates/Currencies';
 
-
-import { Plugins } from '@capacitor/core';
-const { CapacitorQRScanner } = Plugins;
+import { BarcodeScanner }  from '@capacitor-community/barcode-scanner';
 
 import YatMoneroLookup from "@mymonero/mymonero-yat-lookup/index.esm"
 
@@ -2318,11 +2316,17 @@ class SendFundsView extends View
 
 	async startScanning() {
 		let self = this;
-		let result = await CapacitorQRScanner.scan();
-		console.log("Here is the camera scanning result");
-		console.log(result);
-		console.log(result.code);
-		self._shared_didPickPossibleRequestURIStringForAutofill(result.code)
+
+  		const status = await BarcodeScanner.checkPermission({ force: true });
+  		if (!status.granted) return;
+
+  		BarcodeScanner.hideBackground(); // make background of WebView transparent
+		let result = await BarcodeScanner.startScan({targetedFormats: ['QR_CODE']});
+		if (result.hasContent) {
+			console.log("Here is the camera scanning result");
+			console.log(result.content);
+			self._shared_didPickPossibleRequestURIStringForAutofill(result.content);
+		}
 	}
 	__didSelect_actionButton_useCamera()
 	{

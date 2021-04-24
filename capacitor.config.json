@@ -12,5 +12,6 @@
   "server": {
     "hostname": "com.mymonero.android",
     "androidScheme": "https"
-  }
+  },
+  "linuxAndroidStudioPath": "/usr/local/android-studio/bin/studio.sh"
 }

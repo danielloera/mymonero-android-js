@@ -30,6 +30,7 @@
 //
 "use strict"
 //
+import '@capacitor/core';
 import RootView from '../Views/RootView.Lite.web' // electron uses .web files as it has a web DOM
 import setup_utils from '../../MMAppRendererSetup/renderer_setup.browser'
 import MyMoneroLibAppBridge from '../../mymonero_libapp_js/libapp_js/MyMoneroLibAppBridge'
